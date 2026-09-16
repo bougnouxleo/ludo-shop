@@ -198,6 +198,8 @@ jobs:
 
       - name: Audit dependencies
         run: composer audit --no-interaction
+      - name: Build Sass assets
+        run: php bin/console sass:build
 
   # ──────────────────────────────────────────────
   # Stage test — unitaires + intégration + fonct. (~1-3min)
