@@ -198,8 +198,7 @@ jobs:
 
       - name: Audit dependencies
         run: composer audit --no-interaction
-      - name: Build Sass assets
-        run: php bin/console sass:build
+
 
   # ──────────────────────────────────────────────
   # Stage test — unitaires + intégration + fonct. (~1-3min)
@@ -397,5 +396,8 @@ jobs:
             sleep 10
           done
 
+      - name: Build SASS
+        run: php bin/console sass:build
+        
       - name: Infection mutation testing
         run: php -d memory_limit=512M vendor/bin/infection --threads=4 --show-mutations --no-progress
