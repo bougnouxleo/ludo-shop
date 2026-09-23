@@ -20,7 +20,7 @@ class CatalogTest extends FunctionalTestCase
     public function testFilterByCategory(): void
     {
         $category = $this->repository(Category::class)->findOneBy([]);
-        
+
         $this->assertNotNull($category, 'Aucune catégorie trouvée en base de données.');
 
         $productOut = new Product();
@@ -32,12 +32,13 @@ class CatalogTest extends FunctionalTestCase
         $this->entityManager()->persist($productOut);
         $this->entityManager()->flush();
 
-        $this->client->request('GET', '/categories/' . $category->getSlug());
+        $this->client->request('GET', '/categories/'.$category->getSlug());
 
         $this->assertResponseIsSuccessful();
-        
+
         $this->assertSelectorTextNotContains('body', 'Produit Hors Categorie');
     }
+
     public function testInactiveProductIsHidden(): void
     {
         $inactive = new Product();
