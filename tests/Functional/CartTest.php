@@ -42,7 +42,7 @@ class CartTest extends FunctionalTestCase
         $cartItem = $cart->getItems()->first();
         $itemId = $cartItem->getId();
 
-        // 3. Action : on modifie la quantité via la route du Controller (le vrai test commence ici)
+        // 3. Action : on modifie la quantité via la route du Controller 
         $this->client->request('POST', '/cart/items/'.$itemId.'/update', [
             'quantity' => 5, // On passe la quantité à 5
         ]);
@@ -51,7 +51,6 @@ class CartTest extends FunctionalTestCase
         $this->client->followRedirect();
 
         // 4. Assertion : on vérifie que la page affiche bien la nouvelle quantité.
-        // (Assure-toi que ton input HTML possède bien l'attribut value avec la quantité)
         $this->assertSelectorExists('input[value="5"]');
     }
 

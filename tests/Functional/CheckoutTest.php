@@ -17,7 +17,7 @@ class CheckoutTest extends FunctionalTestCase
         // On essaie d'accéder au checkout alors que le panier est vide
         $this->client->request('GET', '/checkout');
 
-        // L'application doit nous rediriger (généralement vers /cart avec un message d'erreur)
+        // L'application doit nous rediriger 
         $this->assertResponseRedirects();
     }
 
@@ -86,15 +86,13 @@ class CheckoutTest extends FunctionalTestCase
         // Action : on la paye
         $this->client->request('POST', '/orders/'.$order->getId().'/pay');
 
-        // On suit la redirection post-paiement (vers la page de confirmation)
+        // On suit la redirection post-paiement 
         $this->assertResponseRedirects();
         $this->client->followRedirect();
 
         // Assertion : on vérifie que la page s'affiche bien et contient l'ID de la commande
         $this->assertResponseIsSuccessful();
 
-        // Note : Ajuste cette ligne selon ce qui s'affiche réellement sur ta page de confirmation
-        // (ça peut être l'ID, une référence alphanumérique, ou juste un texte "Merci pour votre commande")
         $this->assertSelectorTextContains('body', (string) $order->getId());
     }
 
