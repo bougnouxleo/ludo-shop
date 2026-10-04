@@ -17,7 +17,7 @@ class CheckoutTest extends FunctionalTestCase
         // On essaie d'accéder au checkout alors que le panier est vide
         $this->client->request('GET', '/checkout');
 
-        // L'application doit nous rediriger 
+        // L'application doit nous rediriger
         $this->assertResponseRedirects();
     }
 
@@ -86,7 +86,7 @@ class CheckoutTest extends FunctionalTestCase
         // Action : on la paye
         $this->client->request('POST', '/orders/'.$order->getId().'/pay');
 
-        // On suit la redirection post-paiement 
+        // On suit la redirection post-paiement
         $this->assertResponseRedirects();
         $this->client->followRedirect();
 

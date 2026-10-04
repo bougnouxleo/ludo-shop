@@ -42,7 +42,7 @@ class CartTest extends FunctionalTestCase
         $cartItem = $cart->getItems()->first();
         $itemId = $cartItem->getId();
 
-        // 3. Action : on modifie la quantité via la route du Controller 
+        // 3. Action : on modifie la quantité via la route du Controller
         $this->client->request('POST', '/cart/items/'.$itemId.'/update', [
             'quantity' => 5, // On passe la quantité à 5
         ]);
