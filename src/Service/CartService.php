@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Service\PromotionService;
 use App\Entity\Cart;
 use App\Entity\CartItem;
 use App\Entity\Product;
@@ -12,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class CartService
 {
     public function __construct(private readonly EntityManagerInterface $entityManager,
-                                private PromotionService $pm)
+        private PromotionService $pm)
     {
     }
 
