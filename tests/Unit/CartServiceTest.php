@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit;
 
+use App\Service\PromotionService;
 use App\Entity\Cart;
 use App\Entity\CartItem;
 use App\Entity\Product;
@@ -20,7 +21,8 @@ class CartServiceTest extends TestCase
     {
         // Création du stub pour simuler l'EntityManager sans se connecter à la BDD
         $em = $this->createStub(EntityManagerInterface::class);
-        $this->service = new CartService($em);
+        $promotionService = new PromotionService(); 
+        $this->service = new CartService($em, $promotionService); 
     }
 
     public function testEmptyCartReturnsZero(): void
@@ -92,5 +94,28 @@ class CartServiceTest extends TestCase
 
         // Le total doit être le prix multiplié par la quantité (20 * 3)
         $this->assertSame(60.00, $this->service->getTotal($cart));
+    }
+    public function testPromotionalPriceIsUsed(): void
+    {
+        // 1. Préparation 
+        $user = $this->createStub(User::class);
+        $cart = new Cart($user);
+
+        // Création du produit avec les dates 
+        $product = new Product();
+        $product->setName('Produit en promo');
+        $product->setPrice(50.00);
+        $product->setPromoPrice(35.00);
+        $product->setPromoStartsAt(new \DateTimeImmutable('2026-01-01 00:00:00'));
+        $product->setPromoEndsAt(new \DateTimeImmutable('2099-01-01 00:00:00'));
+        $product->setStock(10);
+
+
+        // 2. Action (Act)
+        // On ajoute 2 exemplaires au panier via le service
+        $this->service->addProduct($cart, $product, 2);
+
+        // 3. Vérification (Assert)
+        $this->assertSame(70.00, $this->service->getTotal($cart));
     }
 }

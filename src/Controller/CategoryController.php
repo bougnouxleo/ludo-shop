@@ -22,7 +22,7 @@ class CategoryController extends AbstractController
 
         $counts = [];
         foreach ($categories as $category) {
-            $counts[$category->getId()] = $productRepository->countActiveByCategory($category, $includeMature);
+            $counts[(int) $category->getId()] = $productRepository->countActiveByCategory($category, $includeMature);
         }
 
         return $this->render('category/index.html.twig', [
