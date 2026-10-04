@@ -93,7 +93,7 @@ class CheckoutTest extends FunctionalTestCase
         // Assertion : on vérifie que la page s'affiche bien et contient l'ID de la commande
         $this->assertResponseIsSuccessful();
 
-        $this->assertSelectorTextContains('body', (string) $order->getId());
+        $this->assertSelectorTextContains('body', (string) $order->getNumber());
     }
 
     /**
